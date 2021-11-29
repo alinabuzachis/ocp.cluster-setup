@@ -1,31 +1,23 @@
 ---
 # tasks file for roles/ocp_cluster_setup
 
-- name: Create a working dir
+- name: Create a working directory
   file:
     path: "~/ocp"
     state: directory
     mode: 0755
 
-- name: Download OpenShiff installer on AWS
+- name: Download the OpenShift installer
   get_url:
-    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux.tar.gz
+    url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_release_version }}/openshift-install-linux-{{ ocp_release_version }}.tar.gz"
     dest: "~/ocp"
-  register: installer
 
 - name: Extract archive
   unarchive:
-    src: "{{ installer.dest }}"
-    dest: "~/ocp"
-    remote_src: yes
-
-- name: Copy openshift-install
-  copy:
-    src: "~/ocp/openshift-install"
+    src: "~/ocp/openshift-install-linux-{{ ocp_release_version }}.tar.gz"
     dest: "/usr/local/bin/"
-    mode: 0755
-    remote_src: yes
-  become: yes
+    exclude:
+      - README.md
 
 - name: Check openshift-install version
   shell: openshift-install version
@@ -44,23 +36,12 @@
 
 - name: Download OpenShift Command-line tool
   get_url:
-    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+    url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_release_version }}/openshift-client-linux-{{ ocp_release_version }}.tar.gz"
     dest: "~/ocp"
-  register: client
 
 - name: Extract archive
   unarchive:
     src: "{{ client.dest }}"
-    dest: "~/ocp"
-    remote_src: yes
-
-- name: Copy oc and kubectl
-  copy:
-    src: "~/ocp/{{ item }}"
     dest: "/usr/local/bin/"
-    mode: 0755
-    remote_src: yes
-  with_items:
-    - oc
-    - kubectl
-  become: true
+    exclude:
+      - README.md

@@ -1,0 +1,5 @@
+---
+- name: Remove the deployment
+  shell: "openshift-install destroy cluster | tee openshift-destroy.log"
+  args:
+    chdir: "~/ocp"

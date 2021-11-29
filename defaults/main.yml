@@ -4,3 +4,5 @@
 ocp_route53_hosted_zone: abczone.xyz
 ocp_cluster_name: openshift-cluster
 ocp_cluster_aws_region: eu-central-1
+
+ocp_release_version: latest # 4.9
