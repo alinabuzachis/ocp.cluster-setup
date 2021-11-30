@@ -39,7 +39,7 @@ Example Playbook
       gather_facts: yes
       
       roles:
-      - role: ocp_pull_secrets
+      - role: oasis.ocp_pull_secrets
       - role: ocp_cluster_setup
 
 License
