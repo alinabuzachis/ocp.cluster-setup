@@ -9,15 +9,17 @@
 
 - name: Download the OpenShift installer
   get_url:
-    url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_release_version }}/openshift-install-linux-{{ ocp_release_version }}.tar.gz"
+    url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_release_version }}/openshift-install-linux.tar.gz"
     dest: "~/ocp"
 
 - name: Extract archive
   unarchive:
-    src: "~/ocp/openshift-install-linux-{{ ocp_release_version }}.tar.gz"
+    src: "~/ocp/openshift-install-linux.tar.gz"
     dest: "/usr/local/bin/"
+    mode: 0755
     exclude:
       - README.md
+  become: yes
 
 - name: Check openshift-install version
   shell: openshift-install version
@@ -36,12 +38,15 @@
 
 - name: Download OpenShift Command-line tool
   get_url:
-    url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_release_version }}/openshift-client-linux-{{ ocp_release_version }}.tar.gz"
+    url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_release_version }}/openshift-client-linux.tar.gz"
     dest: "~/ocp"
 
 - name: Extract archive
   unarchive:
-    src: "{{ client.dest }}"
+    src: "~/ocp/openshift-client-linux.tar.gz"
     dest: "/usr/local/bin/"
+    mode: 0755
     exclude:
       - README.md
+  become: yes
+
