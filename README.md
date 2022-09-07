@@ -10,7 +10,7 @@ Proivion a Red Hat OpenShift Cluster on AWS. It does the following:
 Requirements
 ------------
 
-Boto and any software required to run Ansible AWS cloud modules. 
+Boto3 and any software required to run Ansible AWS cloud modules. 
 
 An offline access token found at https://cloud.redhat.com/openshift/token (login required), and according to the documentation found in the OCP [install guide](https://cloud.redhat.com/openshift/install).
 
